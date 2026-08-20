@@ -49,7 +49,7 @@ const baseHost = "https://my-api.werotwang.workers.dev";
 app.get("/api/feedbacks", async (req, res) => {
     let result = await fetch(`${baseHost}/api/feedbacks`);
     result = await result.json();
-    console.log("1");
+    console.log("112222");
     return result;
 });
 
