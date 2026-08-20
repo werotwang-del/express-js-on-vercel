@@ -49,14 +49,14 @@ const baseHost = "https://my-api.werotwang.workers.dev";
 app.get("/api/feedbacks", async (req, res) => {
     let result = await fetch(`${baseHost}/api/feedbacks`);
     result = await result.json();
-    console.log("112222");
-    return result;
+
+    res.json(result);
 });
 
 app.get("/api/tags", async (req, res) => {
     let result = await fetch(`https://files-under-healing-wiring.trycloudflare.com/api/front/tags`);
     result = await result.json();
-    return result;
+    res.json(result);
 });
 
 // Health check
@@ -64,4 +64,5 @@ app.get("/healthz", (req, res) => {
     res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
+// app.listen(4678);
 export default app;
