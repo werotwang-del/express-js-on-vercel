@@ -49,6 +49,13 @@ const baseHost = "https://my-api.werotwang.workers.dev";
 app.get("/api/feedbacks", async (req, res) => {
     let result = await fetch(`${baseHost}/api/feedbacks`);
     result = await result.json();
+    console.log("1");
+    return result;
+});
+
+app.get("/api/tags", async (req, res) => {
+    let result = await fetch(`https://files-under-healing-wiring.trycloudflare.com/api/front/tags`);
+    result = await result.json();
     return result;
 });
 
