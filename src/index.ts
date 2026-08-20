@@ -1,15 +1,15 @@
-import express from 'express'
-import path from 'path'
-import { fileURLToPath } from 'url'
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const app = express()
+const app = express();
 
 // Home route - HTML
-app.get('/', (req, res) => {
-  res.type('html').send(`
+app.get("/", (req, res) => {
+    res.type("html").send(`
     <!doctype html>
     <html>
       <head>
@@ -29,24 +29,32 @@ app.get('/', (req, res) => {
         <img src="/logo.png" alt="Logo" width="120" />
       </body>
     </html>
-  `)
-})
+  `);
+});
 
-app.get('/about', function (req, res) {
-  res.sendFile(path.join(__dirname, '..', 'components', 'about.htm'))
-})
+app.get("/about", function (req, res) {
+    res.sendFile(path.join(__dirname, "..", "components", "about.htm"));
+});
 
 // Example API endpoint - JSON
-app.get('/api-data', (req, res) => {
-  res.json({
-    message: 'Here is some sample API data',
-    items: ['apple', 'banana', 'cherry'],
-  })
-})
+app.get("/api-data", (req, res) => {
+    res.json({
+        message: "Here is some sample API data",
+        items: ["apple", "banana", "cherry"],
+    });
+});
+
+const baseHost = "https://my-api.werotwang.workers.dev";
+
+app.get("/api/feedbacks", async (req, res) => {
+    let result = await fetch(`${baseHost}/api/feedbacks`);
+    result = await result.json();
+    return result;
+});
 
 // Health check
-app.get('/healthz', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() })
-})
+app.get("/healthz", (req, res) => {
+    res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
+});
 
-export default app
+export default app;
