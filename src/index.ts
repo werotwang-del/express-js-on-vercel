@@ -1,73 +1,65 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
+import express, { Application, Request, Response } from "express";
+import cors from "cors";
+import helmet from "helmet";
+import compression from "compression";
+import morgan from "morgan";
+// import { env } from "@/config/env";
+import { globalLimiter } from "@/middlewares/rateLimiter";
+import { errorHandler, notFoundHandler } from "@/middlewares/errorHandler";
+import { logger } from "@/utils/logger";
 
-import { neon } from "@neondatabase/serverless";
-const sql = neon(process.env.DATABASE_URL);
+import authRoutes from "@/modules/auth/auth.routes";
+import userRoutes from "@/modules/users/users.routes";
+import categoryRoutes from "@/modules/categories/categories.routes";
+import bookRoutes from "@/modules/books/books.routes";
+import cartRoutes from "@/modules/cart/cart.routes";
+import orderRoutes from "@/modules/orders/orders.routes";
+import addressRoutes from "@/modules/addresses/addresses.routes";
+import adminRoutes from "@/modules/admin/admin.routes";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export function createApp(): Application {
+    const app = express();
 
-const app = express();
+    app.set("trust proxy", 1);
+    app.use(helmet());
+    app.use(cors({ origin: env.cors.origin, credentials: true }));
+    app.use(compression());
+    app.use(express.json({ limit: "1mb" }));
+    app.use(express.urlencoded({ extended: true }));
+    app.use(
+        morgan(env.nodeEnv === "production" ? "combined" : "dev", {
+            stream: { write: (msg) => logger.info(msg.trim()) },
+        }),
+    );
+    app.use(globalLimiter);
 
-// Home route - HTML
-app.get("/", (req, res) => {
-    res.type("html").send(`
-    <!doctype html>
-    <html>
-      <head>
-        <meta charset="utf-8"/>
-        <title>Express on Vercel</title>
-        <link rel="stylesheet" href="/style.css" />
-      </head>
-      <body>
-        <nav>
-          <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/api-data">API Data</a>
-          <a href="/healthz">Health</a>
-        </nav>
-        <h1>Welcome to Express on Vercel 🚀</h1>
-        <p>This is a minimal example without a database or forms.</p>
-        <img src="/logo.png" alt="Logo" width="120" />
-      </body>
-    </html>
-  `);
-});
+    app.get("/health", (_req: Request, res: Response) => {
+        res.json({ success: true, data: { status: "ok", service: env.appName, time: new Date().toISOString() } });
+    });
 
-app.get("/about", function (req, res) {
-    res.sendFile(path.join(__dirname, "..", "components", "about.htm"));
-});
+    app.get("/", (_req: Request, res: Response) => {
+        res.json({
+            success: true,
+            data: {
+                name: env.appName,
+                version: "1.0.0",
+                docs: "/api",
+            },
+        });
+    });
 
-// Example API endpoint - JSON
-app.get("/api-data", async (req, res) => {
-    const { rows }: { rows: any } = (await sql`SELECT * FROM playing_with_neon`) as any;
-    res.json({ data: rows });
-    // res.json({
-    //     message: "Here is some sample API data",
-    //     items: ["apple", "banana", "cherry"],
-    // });
-});
+    // API routes
+    app.use("/api/auth", authRoutes);
+    app.use("/api/users", userRoutes);
+    app.use("/api/categories", categoryRoutes);
+    app.use("/api/books", bookRoutes);
+    app.use("/api/cart", cartRoutes);
+    app.use("/api/orders", orderRoutes);
+    app.use("/api/addresses", addressRoutes);
+    app.use("/api/admin", adminRoutes);
 
-const baseHost = "https://my-api.werotwang.workers.dev";
+    app.use(notFoundHandler);
+    app.use(errorHandler);
 
-app.get("/api/feedbacks", async (req, res) => {
-    let result = await fetch(`${baseHost}/api/feedbacks`);
-    result = await result.json();
-
-    res.json(result);
-});
-
-app.get("/api/tags", async (req, res) => {
-    let result = await fetch(`https://files-under-healing-wiring.trycloudflare.com/api/front/tags`);
-    result = await result.json();
-    res.json(result);
-});
-
-// Health check
-app.get("/healthz", (req, res) => {
-    res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
-});
-
-// app.listen(4678);
-export default app;
+    return app;
+}
