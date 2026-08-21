@@ -2,6 +2,9 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import { neon } from "@neondatabase/serverless";
+const sql = neon(process.env.DATABASE_URL);
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -37,11 +40,13 @@ app.get("/about", function (req, res) {
 });
 
 // Example API endpoint - JSON
-app.get("/api-data", (req, res) => {
-    res.json({
-        message: "Here is some sample API data",
-        items: ["apple", "banana", "cherry"],
-    });
+app.get("/api-data", async (req, res) => {
+    const { rows }: { rows: any } = (await sql`SELECT * FROM playing_with_neon`) as any;
+    res.json({ data: rows });
+    // res.json({
+    //     message: "Here is some sample API data",
+    //     items: ["apple", "banana", "cherry"],
+    // });
 });
 
 const baseHost = "https://my-api.werotwang.workers.dev";

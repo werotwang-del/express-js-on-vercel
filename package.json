@@ -7,11 +7,14 @@
     "author": "",
     "license": "ISC",
     "scripts": {
-        "dev": "bun ./src/index.ts"
+        "start": "vercel dev",
+        "deploy": "vercel deploy"
     },
     "dependencies": {
+        "@neondatabase/serverless": "^1.1.0",
         "@types/express": "^5.0.0",
-        "express": "^4.18.2"
+        "express": "^4.18.2",
+        "vercel": "^59.3.0"
     },
     "devDependencies": {
         "@types/node": "^22.0.0"
