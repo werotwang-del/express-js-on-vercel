@@ -37,7 +37,7 @@ router.get("/users", async (_req, res, next) => {
         const data = await AppDataSource.getRepository(User).find({
             order: { createdAt: "DESC" },
             take: 100,
-            select: ["id", "email", "username", "role", "isActive", "createdAt"],
+            select: { id: true, email: true, username: true, role: true, isActive: true, createdAt: true },
         });
         res.json({ success: true, data });
     } catch (err) {
