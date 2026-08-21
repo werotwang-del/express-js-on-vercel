@@ -1,9 +1,10 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
 import { env } from "@/config/env";
+import { initDatabase } from "@/config/database";
 import { globalLimiter } from "@/middlewares/rateLimiter";
 import { errorHandler, notFoundHandler } from "@/middlewares/errorHandler";
 import { logger } from "@/utils/logger";
@@ -31,6 +32,14 @@ export function createApp(): Application {
             stream: { write: (msg) => logger.info(msg.trim()) },
         }),
     );
+    app.use(async (_req: Request, res: Response, next: NextFunction) => {
+        try {
+            await initDatabase();
+            next();
+        } catch (err) {
+            next(err);
+        }
+    });
     app.use(globalLimiter);
 
     app.get("/health", (_req: Request, res: Response) => {
@@ -63,3 +72,5 @@ export function createApp(): Application {
 
     return app;
 }
+
+export default createApp();

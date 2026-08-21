@@ -19,14 +19,12 @@ export const AppDataSource = new DataSource({
     migrationsTableName: "migrations",
 });
 
-if (!process.argv[1]?.includes("typeorm/cli.js")) {
-    await AppDataSource.initialize();
-}
+let initPromise: Promise<void> | null = null;
 
 export async function initDatabase(): Promise<void> {
     if (AppDataSource.isInitialized) return;
-    await AppDataSource.initialize();
-
-    // eslint-disable-next-line no-console
-    // console.log(`[db] connected: ${env.db.host}:${env.db.port}/${env.db.database}`);
+    if (!initPromise) {
+        initPromise = AppDataSource.initialize().then(() => undefined);
+    }
+    await initPromise;
 }

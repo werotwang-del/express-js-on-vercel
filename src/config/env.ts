@@ -17,6 +17,7 @@ function bool(key: string, fallback: boolean): boolean {
     return v.toLowerCase() === "true" || v === "1";
 }
 
+console.log(process.env.JWT_ACCESS_SECRET);
 export const env = {
     nodeEnv: required("NODE_ENV", "development"),
     port: num("PORT", 3000),
