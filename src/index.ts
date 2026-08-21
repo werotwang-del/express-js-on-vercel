@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
-// import { env } from "@/config/env";
+import { env } from "@/config/env";
 import { globalLimiter } from "@/middlewares/rateLimiter";
 import { errorHandler, notFoundHandler } from "@/middlewares/errorHandler";
 import { logger } from "@/utils/logger";

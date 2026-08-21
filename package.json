@@ -9,6 +9,7 @@
     "scripts": {
         "start": "vercel dev",
         "deploy": "vercel deploy",
+        "seed": "tsx --env-file=.env.local src/scripts/seed.ts",
         "migration:generate": "tsx --env-file=.env.local node_modules/typeorm/cli.js migration:generate -d src/config/database.ts src/migrations/migration",
         "migration:run": "tsx --env-file=.env.local node_modules/typeorm/cli.js migration:run -d src/config/database.ts",
         "migration:revert": "tsx --env-file=.env.local node_modules/typeorm/cli.js migration:revert -d src/config/database.ts",
@@ -22,6 +23,7 @@
         "compression": "^1.7.4",
         "cors": "^2.8.6",
         "express": "^4.18.2",
+        "express-rate-limit": "^8.6.2",
         "helmet": "^7.1.0",
         "jsonwebtoken": "^9.0.2",
         "morgan": "^1.10.0",

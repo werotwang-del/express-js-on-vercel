@@ -1,6 +1,9 @@
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
-import { env } from "@/config/env";
+import { MoreThan } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
+import { AppDataSource } from "@/config/database";
+import { env } from "@/config/env";
+import { Token, TokenType } from "@/modules/auth/token.entity";
 
 export interface TokenPayload extends JwtPayload {
     sub: string; // userId
@@ -68,4 +71,43 @@ export function verifyAccess(token: string): TokenPayload {
 
 export function verifyRefresh(token: string): TokenPayload {
     return jwt.verify(token, env.jwt.refreshSecret) as TokenPayload;
+}
+
+export async function storeRefresh(jti: string, userId: string, ttlSeconds: number): Promise<void> {
+    await AppDataSource.getRepository(Token).save(
+        AppDataSource.getRepository(Token).create({
+            jti,
+            userId,
+            type: TokenType.REFRESH,
+            expiresAt: new Date(Date.now() + ttlSeconds * 1000),
+        }),
+    );
+}
+
+export async function isRefreshActive(jti: string): Promise<boolean> {
+    const count = await AppDataSource.getRepository(Token).count({
+        where: { jti, type: TokenType.REFRESH, expiresAt: MoreThan(new Date()) },
+    });
+    return count > 0;
+}
+
+export async function revokeRefresh(jti: string): Promise<void> {
+    await AppDataSource.getRepository(Token).delete({ jti, type: TokenType.REFRESH });
+}
+
+export async function blacklistToken(jti: string, ttlSeconds: number): Promise<void> {
+    await AppDataSource.getRepository(Token).save(
+        AppDataSource.getRepository(Token).create({
+            jti,
+            type: TokenType.BLACKLIST,
+            expiresAt: new Date(Date.now() + ttlSeconds * 1000),
+        }),
+    );
+}
+
+export async function isBlacklisted(jti: string): Promise<boolean> {
+    const count = await AppDataSource.getRepository(Token).count({
+        where: { jti, type: TokenType.BLACKLIST, expiresAt: MoreThan(new Date()) },
+    });
+    return count > 0;
 }

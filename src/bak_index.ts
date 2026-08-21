@@ -55,14 +55,14 @@ app.get("/api-data", async (req, res) => {
 const baseHost = "https://my-api.werotwang.workers.dev";
 
 app.get("/api/feedbacks", async (req, res) => {
-    let result = await fetch(`${baseHost}/api/feedbacks`);
+    let result = (await fetch(`${baseHost}/api/feedbacks`)) as any;
     result = await result.json();
 
     res.json(result);
 });
 
 app.get("/api/tags", async (req, res) => {
-    let result = await fetch(`https://files-under-healing-wiring.trycloudflare.com/api/front/tags`);
+    let result = (await fetch(`https://files-under-healing-wiring.trycloudflare.com/api/front/tags`)) as any;
     result = await result.json();
     res.json(result);
 });
