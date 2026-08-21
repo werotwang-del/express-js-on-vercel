@@ -1,8 +1,8 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "@/config/database";
-import { Cart } from "./cart.entity";
-import { Book, BookStatus } from "@/modules/books/book.entity";
-import { ApiError } from "@/utils/ApiError";
+import { AppDataSource } from "../../config/database.js";
+import { Cart } from "./cart.entity.js";
+import { Book, BookStatus } from "../books/book.entity.js";
+import { ApiError } from "../../utils/ApiError.js";
 
 export class CartService {
   private repo: Repository<Cart>;

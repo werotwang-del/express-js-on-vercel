@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { cartService } from "./cart.service";
+import { cartService } from "./cart.service.js";
 
 const addSchema = z.object({
     bookId: z.string().uuid(),

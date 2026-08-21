@@ -1,7 +1,7 @@
 import { Repository, Like, FindOptionsWhere } from "typeorm";
-import { AppDataSource } from "@/config/database";
-import { Book, BookStatus } from "./book.entity";
-import { ApiError } from "@/utils/ApiError";
+import { AppDataSource } from "../../config/database.js";
+import { Book, BookStatus } from "./book.entity.js";
+import { ApiError } from "../../utils/ApiError.js";
 
 export interface BookListQuery {
     page?: number;

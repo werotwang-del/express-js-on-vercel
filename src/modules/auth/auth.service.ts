@@ -1,11 +1,11 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "@/config/database";
-import { User, UserRole } from "@/modules/users/user.entity";
-import { ApiError } from "@/utils/ApiError";
-import { hashPassword, verifyPassword } from "@/utils/password";
-import { blacklistToken, isBlacklisted, isRefreshActive, revokeRefresh, signTokenPair, storeRefresh, verifyAccess, verifyRefresh } from "@/utils/jwt";
+import { AppDataSource } from "../../config/database.js";
+import { User, UserRole } from "../users/user.entity.js";
+import { ApiError } from "../../utils/ApiError.js";
+import { hashPassword, verifyPassword } from "../../utils/password.js";
+import { blacklistToken, isBlacklisted, isRefreshActive, revokeRefresh, signTokenPair, storeRefresh, verifyAccess, verifyRefresh } from "../../utils/jwt.js";
 
-import type { LoginDto, RefreshDto, RegisterDto } from "./auth.dto";
+import type { LoginDto, RefreshDto, RegisterDto } from "./auth.dto.js";
 
 interface AuthResult {
     user: {

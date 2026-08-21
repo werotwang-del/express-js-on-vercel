@@ -1,9 +1,9 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "@/config/database";
-import { Order, OrderItem, OrderStatus } from "./order.entity";
-import { Cart } from "@/modules/cart/cart.entity";
-import { Book } from "@/modules/books/book.entity";
-import { ApiError } from "@/utils/ApiError";
+import { AppDataSource } from "../../config/database.js";
+import { Order, OrderItem, OrderStatus } from "./order.entity.js";
+import { Cart } from "../cart/cart.entity.js";
+import { Book } from "../books/book.entity.js";
+import { ApiError } from "../../utils/ApiError.js";
 
 interface CreateOrderInput {
     cartItemIds?: string[]; // specific items; if empty, use all selected

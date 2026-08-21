@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "@/config/database";
-import { Category } from "./category.entity";
-import { ApiError } from "@/utils/ApiError";
+import { AppDataSource } from "../../config/database.js";
+import { Category } from "./category.entity.js";
+import { ApiError } from "../../utils/ApiError.js";
 
 export class CategoriesService {
     private repo: Repository<Category>;

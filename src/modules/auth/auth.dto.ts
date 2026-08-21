@@ -1,16 +1,16 @@
 import { z } from "zod";
 
 export const registerSchema = z.object({
-    email: z.string().email("Invalid email").max(120),
+    email: z.string().email("邮箱格式不正确").max(120),
     username: z
         .string()
-        .min(3, "Username must be at least 3 chars")
-        .max(40, "Username max 40 chars")
-        .regex(/^[a-zA-Z0-9_-]+$/, "Username only letters, numbers, _ or -"),
-    password: z.string().min(8, "Password min 8 chars").max(64),
+        .min(3, "用户名长度不能小于 3")
+        .max(40, "用户名长度不能大于 40")
+        .regex(/^[a-zA-Z0-9_-]+$/, "用户名只能包含字母、数字、_ 或 -"),
+    password: z.string().min(8, "密码长度不能小于 8").max(64),
     phone: z
         .string()
-        .regex(/^\+?\d{6,20}$/, "Invalid phone")
+        .regex(/^\+?\d{6,20}$/, "手机号格式不正确")
         .optional(),
 });
 export type RegisterDto = z.infer<typeof registerSchema>;

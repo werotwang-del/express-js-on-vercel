@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, Index, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Cart } from "@/modules/cart/cart.entity";
-import { Order } from "@/modules/orders/order.entity";
-import { Address } from "@/modules/addresses/address.entity";
+import { Cart } from "../cart/cart.entity.js";
+import { Order } from "../orders/order.entity.js";
+import { Address } from "../addresses/address.entity.js";
 
 export enum UserRole {
     ADMIN = "admin",

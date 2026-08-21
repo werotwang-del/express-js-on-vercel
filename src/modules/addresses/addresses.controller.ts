@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { addressesService } from "./addresses.service";
+import { addressesService } from "./addresses.service.js";
 
 const addressSchema = z.object({
     receiverName: z.string().min(1).max(80),

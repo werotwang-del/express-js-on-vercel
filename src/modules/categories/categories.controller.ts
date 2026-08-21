@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { categoriesService } from "./categories.service";
+import { categoriesService } from "./categories.service.js";
 
 const createSchema = z.object({
     name: z.string().min(1).max(80),

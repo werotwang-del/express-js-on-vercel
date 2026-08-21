@@ -1,10 +1,10 @@
 import "reflect-metadata";
-import { AppDataSource, initDatabase } from "@/config/database";
-import { User, UserRole } from "@/modules/users/user.entity";
-import { Category } from "@/modules/categories/category.entity";
-import { Book, BookStatus } from "@/modules/books/book.entity";
-import { hashPassword } from "@/utils/password";
-import { logger } from "@/utils/logger";
+import { AppDataSource, initDatabase } from "../config/database.js";
+import { User, UserRole } from "../modules/users/user.entity.js";
+import { Category } from "../modules/categories/category.entity.js";
+import { Book, BookStatus } from "../modules/books/book.entity.js";
+import { hashPassword } from "../utils/password.js";
+import { logger } from "../utils/logger.js";
 
 async function main() {
     await initDatabase();

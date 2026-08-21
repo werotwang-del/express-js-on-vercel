@@ -1,13 +1,14 @@
 import "reflect-metadata";
+import "pg";
 import { DataSource } from "typeorm";
 
-import { User } from "@/modules/users/user.entity";
-import { Book } from "@/modules/books/book.entity";
-import { Category } from "@/modules/categories/category.entity";
-import { Cart } from "@/modules/cart/cart.entity";
-import { Order, OrderItem } from "@/modules/orders/order.entity";
-import { Address } from "@/modules/addresses/address.entity";
-import { Token } from "@/modules/auth/token.entity";
+import { User } from "../modules/users/user.entity.js";
+import { Book } from "../modules/books/book.entity.js";
+import { Category } from "../modules/categories/category.entity.js";
+import { Cart } from "../modules/cart/cart.entity.js";
+import { Order, OrderItem } from "../modules/orders/order.entity.js";
+import { Address } from "../modules/addresses/address.entity.js";
+import { Token } from "../modules/auth/token.entity.js";
 
 export const AppDataSource = new DataSource({
     type: "postgres",

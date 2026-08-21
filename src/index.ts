@@ -3,20 +3,23 @@ import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
-import { env } from "@/config/env";
-import { initDatabase } from "@/config/database";
-import { globalLimiter } from "@/middlewares/rateLimiter";
-import { errorHandler, notFoundHandler } from "@/middlewares/errorHandler";
-import { logger } from "@/utils/logger";
+import { initZodI18n } from "./utils/zodI18n.js";
+import { env } from "./config/env.js";
+import { initDatabase } from "./config/database.js";
+import { globalLimiter } from "./middlewares/rateLimiter.js";
+import { errorHandler, notFoundHandler } from "./middlewares/errorHandler.js";
+import { logger } from "./utils/logger.js";
 
-import authRoutes from "@/modules/auth/auth.routes";
-import userRoutes from "@/modules/users/users.routes";
-import categoryRoutes from "@/modules/categories/categories.routes";
-import bookRoutes from "@/modules/books/books.routes";
-import cartRoutes from "@/modules/cart/cart.routes";
-import orderRoutes from "@/modules/orders/orders.routes";
-import addressRoutes from "@/modules/addresses/addresses.routes";
-import adminRoutes from "@/modules/admin/admin.routes";
+initZodI18n();
+
+import authRoutes from "./modules/auth/auth.routes.js";
+import userRoutes from "./modules/users/users.routes.js";
+import categoryRoutes from "./modules/categories/categories.routes.js";
+import bookRoutes from "./modules/books/books.routes.js";
+import cartRoutes from "./modules/cart/cart.routes.js";
+import orderRoutes from "./modules/orders/orders.routes.js";
+import addressRoutes from "./modules/addresses/addresses.routes.js";
+import adminRoutes from "./modules/admin/admin.routes.js";
 
 export function createApp(): Application {
     const app = express();

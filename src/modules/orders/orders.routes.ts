@@ -1,9 +1,9 @@
 import { Router } from "express";
-import * as controller from "./orders.controller";
-import { authRequired, requireRole } from "@/middlewares/auth";
+import * as controller from "./orders.controller.js";
+import { authRequired, requireRole } from "../../middlewares/auth.js";
 import { z } from "zod";
-import { OrderStatus } from "./order.entity";
-import { ordersService } from "./orders.service";
+import { OrderStatus } from "./order.entity.js";
+import { ordersService } from "./orders.service.js";
 
 const router = Router();
 router.use(authRequired);

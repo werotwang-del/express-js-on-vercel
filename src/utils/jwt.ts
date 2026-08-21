@@ -1,9 +1,9 @@
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken";
 import { MoreThan } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
-import { AppDataSource } from "@/config/database";
-import { env } from "@/config/env";
-import { Token, TokenType } from "@/modules/auth/token.entity";
+import { AppDataSource } from "../config/database.js";
+import { env } from "../config/env.js";
+import { Token, TokenType } from "../modules/auth/token.entity.js";
 
 export interface TokenPayload extends JwtPayload {
     sub: string; // userId

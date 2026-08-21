@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { ApiError } from "@/utils/ApiError";
-import { isBlacklisted, verifyAccess } from "@/utils/jwt";
+import { ApiError } from "../utils/ApiError.js";
+import { isBlacklisted, verifyAccess } from "../utils/jwt.js";
 
 export async function authRequired(req: Request, _res: Response, next: NextFunction) {
     try {

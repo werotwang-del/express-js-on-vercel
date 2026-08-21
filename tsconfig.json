@@ -9,7 +9,7 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
+        "emitDecoratorMetadata": false,
         "declaration": false,
         "resolveJsonModule": true,
         "outDir": "./dist",

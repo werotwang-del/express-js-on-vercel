@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { booksService } from "./books.service";
-import { BookStatus } from "./book.entity";
+import { booksService } from "./books.service.js";
+import { BookStatus } from "./book.entity.js";
 
 export const listQuerySchema = z.object({
     page: z.coerce.number().int().min(1).optional(),

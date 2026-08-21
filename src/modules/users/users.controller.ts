@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { AppDataSource } from "@/config/database";
-import { User } from "./user.entity";
-import { ApiError } from "@/utils/ApiError";
+import { AppDataSource } from "../../config/database.js";
+import { User } from "./user.entity.js";
+import { ApiError } from "../../utils/ApiError.js";
 
 const updateSchema = z.object({
     username: z.string().min(3).max(40).optional(),

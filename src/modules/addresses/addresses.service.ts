@@ -1,7 +1,7 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "@/config/database";
-import { Address } from "./address.entity";
-import { ApiError } from "@/utils/ApiError";
+import { AppDataSource } from "../../config/database.js";
+import { Address } from "./address.entity.js";
+import { ApiError } from "../../utils/ApiError.js";
 
 export class AddressesService {
     private repo: Repository<Address>;

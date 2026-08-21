@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { User } from "@/modules/users/user.entity";
+import { User } from "../users/user.entity.js";
 
 @Entity("addresses")
 export class Address {

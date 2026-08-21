@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { authRequired, requireRole } from "@/middlewares/auth";
-import { AppDataSource } from "@/config/database";
-import { User } from "@/modules/users/user.entity";
-import { Book } from "@/modules/books/book.entity";
-import { Order, OrderStatus } from "@/modules/orders/order.entity";
+import { authRequired, requireRole } from "../../middlewares/auth.js";
+import { AppDataSource } from "../../config/database.js";
+import { User } from "../users/user.entity.js";
+import { Book } from "../books/book.entity.js";
+import { Order, OrderStatus } from "../orders/order.entity.js";
 
 const router = Router();
 router.use(authRequired, requireRole("admin"));

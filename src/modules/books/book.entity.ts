@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { Category } from "@/modules/categories/category.entity";
-import { OrderItem } from "@/modules/orders/order.entity";
+import { Category } from "../categories/category.entity.js";
+import { OrderItem } from "../orders/order.entity.js";
 
 export enum BookStatus {
     ON_SALE = "on_sale",

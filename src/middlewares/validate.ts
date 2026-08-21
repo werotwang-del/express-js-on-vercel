@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { AnyZodObject, ZodError } from "zod";
-import { ApiError } from "@/utils/ApiError";
+import { AnyZodObject } from "zod";
+import { ApiError } from "../utils/ApiError.js";
+import { formatZodError } from "../utils/zodError.js";
 
 type Source = "body" | "query" | "params";
 
@@ -11,7 +12,8 @@ export function validate(schemas: Partial<Record<Source, AnyZodObject>>) {
                 const schema = schemas[source]!;
                 const result = schema.safeParse(req[source]);
                 if (!result.success) {
-                    throw ApiError.badRequest(`Invalid ${source}`, formatZodError(result.error));
+                    const sourceLabels: Record<Source, string> = { body: "请求体", query: "查询参数", params: "路径参数" };
+                    throw ApiError.badRequest(`${sourceLabels[source]}无效`, formatZodError(result.error));
                 }
                 // overwrite with parsed (and possibly transformed) data
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,11 +24,4 @@ export function validate(schemas: Partial<Record<Source, AnyZodObject>>) {
             next(err);
         }
     };
-}
-
-function formatZodError(err: ZodError) {
-    return err.issues.map((i) => ({
-        path: i.path.join("."),
-        message: i.message,
-    }));
 }

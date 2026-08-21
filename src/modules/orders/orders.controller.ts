@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { ordersService } from "./orders.service";
-import { OrderStatus } from "./order.entity";
+import { ordersService } from "./orders.service.js";
+import { OrderStatus } from "./order.entity.js";
 
 const createSchema = z.object({
     cartItemIds: z.array(z.string().uuid()).optional(),
